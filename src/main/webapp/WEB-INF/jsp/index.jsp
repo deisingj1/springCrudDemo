@@ -4,11 +4,16 @@ pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <c:forEach var="name" items="${c}">
+<form action="/customer/delete" method="GET">
 ${name.getName()}
+<input type="hidden" name="id" value="${name.getId()}" />
+<input type="submit" value="delete">
+</form>
 <br />
 </c:forEach>
 <br />
-<form action="/customer/add" method="POST">
+<h4>Add new person</h4>
+<form action="/customer" method="POST">
 <input type="text" name="name">
 <input type="submit">
 </form>
