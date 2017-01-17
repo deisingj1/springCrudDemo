@@ -35,10 +35,15 @@ public class CustomerController {
 		return "index";
 	}
 	@RequestMapping(value = "/customer", method=RequestMethod.POST)
-	public String addCustomer(@ModelAttribute("name") String name) {
+	public String addCustomer(@ModelAttribute("name") String name, @ModelAttribute("id") String id) {
 		String[] splitName = name.split(" ");
 		Customer c = new Customer(2, splitName[0], splitName[1]);
-		jdbcTemplate.update("INSERT INTO customers(first_name, last_name) VALUES (?,?)", splitName);
+		if(id.isEmpty()) {
+			jdbcTemplate.update("INSERT INTO customers(first_name, last_name) VALUES (?,?)", splitName);
+		}
+		else {
+			jdbcTemplate.update("UPDATE customers SET first_name = ?, last_name = ? WHERE id = ?", splitName[0],splitName[1], id);
+		}
 		return "add";
 	}
 	@RequestMapping(value = "/customer/delete", method=RequestMethod.GET)
@@ -46,6 +51,10 @@ public class CustomerController {
 		model.addAttribute("id", id);
 		jdbcTemplate.update("DELETE FROM customers WHERE id = ?", id);
 		return "del";
+	}
+	@RequestMapping(value = "/customer/edit", method=RequestMethod.POST)
+	public String editCustomer(@ModelAttribute("name") String name, @ModelAttribute("id") String id) {
+		return "edit";
 	}
 	
 	public void test() {

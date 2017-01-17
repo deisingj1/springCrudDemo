@@ -9,6 +9,11 @@ ${name.getName()}
 <input type="hidden" name="id" value="${name.getId()}" />
 <input type="submit" value="delete">
 </form>
+<form action="/customer/edit" method="POST">
+<input type="hidden" name="name" value="${name.getName()}" />
+<input type="hidden" name="id" value="${name.getId()}" />
+<input type="submit" value="edit" />
+</form>
 <br />
 </c:forEach>
 <br />
